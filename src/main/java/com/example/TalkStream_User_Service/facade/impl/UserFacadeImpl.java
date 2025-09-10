@@ -11,7 +11,10 @@ import com.example.TalkStream_User_Service.facade.UserFacade;
 import com.example.TalkStream_User_Service.facade.impl.populate.UserFacadeToDTOMapping;
 import com.example.TalkStream_User_Service.persistence.UserPersistence;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserFacadeImpl implements UserFacade{
 
 	@Autowired
@@ -27,6 +30,10 @@ public class UserFacadeImpl implements UserFacade{
 
 	@Override
 	public void insertUser(UserDTO userDto) {
+		 if (userPersistence.findById(userDto.getUsername()).isPresent()) {
+		        log.error("User with this id already exists");
+		        return;
+		    }
 		Users user = new Users();
 		user = userMapping.populateUserDetails(userDto, user);
 		userPersistence.save(user);
