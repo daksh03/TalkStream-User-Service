@@ -9,9 +9,9 @@ public interface UserFacade {
 	
 	Optional<Users> getUserDetails(String username);
 
-	void insertUser(UserDTO userDto);
+	String insertUser(UserDTO userDto);
 
-	void editUser(String username, UserDTO userDto);
+	String editUser(String username, UserDTO userDto);
 
 	void deleteUser(String username);
 

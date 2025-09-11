@@ -29,23 +29,24 @@ public class UserFacadeImpl implements UserFacade{
 	}
 
 	@Override
-	public void insertUser(UserDTO userDto) {
-		 if (userPersistence.findById(userDto.getUsername()).isPresent()) {
+	public String insertUser(UserDTO userDto) {
+		 if (userPersistence.existsById(userDto.getUsername())) {
 		        log.error("User with this id already exists");
-		        return;
+		        return "Already exist with id: " + userDto.getUsername();
 		    }
-		Users user = new Users();
-		user = userMapping.populateUserDetails(userDto, user);
+		Users user = userMapping.populateUserDetails(userDto, new Users());
 		userPersistence.save(user);
+		return "Added SuccessFully";
 		
 	}
 
 	@Override
-	public void editUser(String username, UserDTO userDto) {
+	public String editUser(String username, UserDTO userDto) {
 		Users existingUser = userPersistence.findById(username)
 				.orElseThrow(() -> new RuntimeException("User not Found"));
 		existingUser=userMapping.populateUserDetails(userDto, existingUser);
 		userPersistence.save(existingUser);
+		return "Update SuccessFull";
 		
 	}
 

@@ -16,6 +16,7 @@ import com.example.TalkStream_User_Service.dto.UserDTO;
 import com.example.TalkStream_User_Service.entity.Users;
 import com.example.TalkStream_User_Service.facade.UserFacade;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -32,17 +33,14 @@ public class UserController {
 	}
 
 	@PostMapping("/addUser")
-	public String addUserDetails(@RequestBody UserDTO userDto) {
-		userFacade.insertUser(userDto);
-		log.info("User Added successfully");
-		return "Added Successfully";
+	public String addUserDetails(@Valid @RequestBody UserDTO userDto) {
+		return userFacade.insertUser(userDto);
 	}
 	
 	@PutMapping("/editUser/{username}")
 	public String editUser(@PathVariable String username, @RequestBody UserDTO userDto) {
-		userFacade.editUser(username, userDto);
 		log.info("User Details were updated successfully");
-		return "Update SuccessFull";
+		return userFacade.editUser(username, userDto);
 	}
 	
 	@DeleteMapping("/deleteUser/{username}")
