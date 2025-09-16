@@ -28,6 +28,9 @@ public class Users {
 
     @Column(name = "password")
     private String password;
+    
+    @Column
+    private String status;
 	
 
 }

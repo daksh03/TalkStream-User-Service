@@ -26,5 +26,7 @@ public class UserDTO {
 			+ " contain one uppercase, one lowercase, one digit,"
 			+ " and one special character")
 	private String password;
+	
+	private String status;
 
 }
